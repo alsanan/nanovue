@@ -1,0 +1,27 @@
+<template>
+    Contenido. <slot></slot>
+</template>
+
+<style>
+    ::slotted(button) {  /* afecta a los button dentro del slot */
+        font-size:2rem !important;
+        cursor:pointer;
+    }
+    click-counter {
+        display: block; /* Por defecto, los custom elements tienen display: inline */
+        border: 1px dashed yellow;
+        padding: 10px;
+    }
+</style>
+
+<script>
+    console.log('this',this)
+    let slotted= [...this.querySelectorAll('*')]
+    // afecta al primer button del slot
+    console.log(this,this.querySelector('slot'), slotted, slotted.length, slotted.find(_=>_.tagName=='BUTTON'))
+    if (slotted?.length) {
+        slotted?.find(_=>_.tagName=='BUTTON').addEventListener('click',_=>_.target.textContent= Number(_.target.textContent)+1)
+    }
+</script>
+
+

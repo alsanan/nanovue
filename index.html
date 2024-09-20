@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, initial-scale=1.0">
+    <link rel="stylesheet" href="https://alzira.alapont.com/labs/componentesweb/weblin/css/metro.css">
+    <title>Document</title>
+</head>
+<body>
+  <br>
+  <b>nanoVUE</b>
+  <!-- Plantilla HTML -->
+  extending <a href="https://github.com/vuejs/petite-vue">Petite Vue</a>
+  <div>
+    <button @click="sayHello">Click Me</button>
+    <button v-get="'test.html'" v-target="'#result'">get</button>
+    <button v-post="'test.html'" v-target="'#result'">post</button>
+    <button v-get-json="'https://jsonplaceholder.typicode.com/users'" v-template="'#template'" v-target="'#result'">get-json</button>
+    <form v-post="'test.html'" v-target="'#result'" ><button>form send</button></form>
+    <div id="result"></div>
+    {{count}} <button @click="inc">+</button>
+  </div>
+
+  <template id="template">
+    <ul>
+      <li v-for="user in $data" :key="user.id" style="display:grid; grid-template-columns: 1fr 1fr;">
+        <hr style="grid-column: 1 / span 2;">
+        <h3>{{ user.name }} ({{ user.username }})</h3>
+          <p>Email: <a :href="'mailto:' + user.email">{{ user.email }}</a></p>
+          <p>Phone: <a :href="'tel:' + user.phone">{{ user.phone }}</a></p>
+          <p>Website: <a :href="'http://' + user.website" target="_blank">{{ user.website }}</a></p>
+        <fieldset>
+          <h4>Address:</h4>
+          <p>{{ user.address.street }}, {{ user.address.suite }}</p>
+          <p>{{ user.address.city }}, {{ user.address.zipcode }}</p>
+        </fieldset><fieldset>
+          <h4>Company:</h4>
+          <p><strong>{{ user.company.name }}</strong></p>
+          <p><em>{{ user.company.catchPhrase }}</em></p>
+          <p>{{ user.company.bs }}</p>
+        </fieldset>
+      </li>
+    </ul>
+  </template>
+
+  <click-counter> webco:
+    <button>3</button>
+  </click-counter>
+
+  <html-include src="test.html"></html-include>
+
+  <!-- Importar Petite Vue -->
+  <script type="module">
+    //import { createApp } from 'https://unpkg.com/petite-vue?module';
+    import { nanoVue } from './nanovue.js'; 
+
+    // Registro de directivas personalizadas en la instancia de la app
+    const app = nanoVue({
+      // Métodos y data predeterminada
+      count:0, 
+      sayHello() { alert('Hello from Petite Vue!'); },
+      inc() { this.count++ }
+    });
+
+    // Iniciar la app
+    app.mount();
+  </script>
+
+<hr>idea proyecto petite-vue
+<li>🆗 sin v-scope (body).
+<li>🆗 atributos de carga parcial de html y/o json. basado en button.@click y form.@submit
+<li>🆗 carga de web components basado en archivos externos de .html (no. vue) por defecto.
+<li>🆗 módulo nanoVue.
+<li>sintaxis basada en dos puntos "':" para todo atributo gestionable.
+
+</body>
+</html>
